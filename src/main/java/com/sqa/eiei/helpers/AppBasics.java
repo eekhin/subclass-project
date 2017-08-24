@@ -37,15 +37,30 @@ public class AppBasics {
 	}
 
 	public static Boolean requestBoolean(String question) {
-		Boolean num = true;
+		String input;
+		System.out.print(question + "(Yes/No)");
+		input = scanner.nextLine();
+		if (input.trim().equalsIgnoreCase("Yes")) {
+			return true;
+		} else if (input.trim().equalsIgnoreCase("No")) {
+			return false;
+		} else {
+			System.out.println("You did not respond to the queston in the correct form");
+			return false;
+		}
+	}
+
+	public static byte requestByte(String question) {
+		byte num = 0;
 		String input;
 		System.out.print(question + " ");
 		input = scanner.nextLine();
-		if (input.equalsIgnoreCase("no")) {
-			return false;
-		} else
-			System.out.println("You did not respond to the queston in the correct form");
-		return true;
+		try {
+			num = Byte.parseByte(input);
+		} catch (NumberFormatException e) {
+			System.out.println("You did not supply a valid number [" + input + "]. please provide only digits.");
+		}
+		return num;
 	}
 
 	public static char requestChar(String question) {
@@ -53,22 +68,8 @@ public class AppBasics {
 		return scanner.nextLine().charAt(0);
 	}
 
-	// public static int requestInt(String question)
-	// {
-	// int num = 0; // double num =0.0;
-	// String input;
-	// System.out.print(question + "");
-	// input = scanner.nextLine();
-	// try {
-	// num = Integer.parseInt(input); // num = Double.pareseDouble(input);
-	// } catch (NumberFormatException e) {
-	// System.out.println("You did not supply a valid number [" + input +
-	// "].please provide only digits.");
-	// }
-	// return num;
-	// }
 	public static double requestDouble(String question) {
-		double num = 0.0; // int num = 0;
+		double num = 0;
 		String input;
 		System.out.print(question + "");
 		input = scanner.nextLine();
@@ -81,12 +82,25 @@ public class AppBasics {
 	}
 
 	public static float requestFloat(String question) {
-		float num = 0; // int num = 0;
+		float num = 0;
 		String input;
 		System.out.print(question + "");
 		input = scanner.nextLine();
 		try {
 			num = Float.parseFloat(input); // num = Integer.parseInt(input);
+		} catch (NumberFormatException e) {
+			System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+		}
+		return num;
+	}
+
+	public static int requestInt(String question) {
+		int num = 0; // double num =0.0;
+		String input;
+		System.out.print(question + "");
+		input = scanner.nextLine();
+		try {
+			num = Integer.parseInt(input); // num = Double.pareseDouble(input);
 		} catch (NumberFormatException e) {
 			System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
 		}
