@@ -53,16 +53,6 @@ public class AppBasics {
 		return scanner.nextLine().charAt(0);
 	}
 
-	public static char requestChar(String question) {
-		System.out.println(question + "");
-		return scanner.nextLine().charAt(0);
-	}
-
-	public static char requestChar(String question) {
-		System.out.println(question + "");
-		return scanner.nextLine().charAt(0);
-	}
-
 	// public static int requestInt(String question)
 	// {
 	// int num = 0; // double num =0.0;
