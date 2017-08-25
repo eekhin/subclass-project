@@ -16,7 +16,9 @@ package com.sqa.eiei.helpers;
  * @version 1.0.0
  * @since 1.0
  */
-import java.util.*;;
+import java.util.*;
+
+import com.sqa.eiei.helpers.exceptions.*;;
 
 public class AppBasics {
 
@@ -38,27 +40,36 @@ public class AppBasics {
 
 	public static Boolean requestBoolean(String question) {
 		String input;
-		System.out.print(question + "(Yes/No)");
+		Boolean isValid = false;
+		Boolean response = true;
+		while (!isValid)
+			System.out.print(question + " (Yes/No)");
 		input = scanner.nextLine();
-		if (input.trim().equalsIgnoreCase("Yes")) {
-			return true;
-		} else if (input.trim().equalsIgnoreCase("No")) {
-			return false;
+		if (input.trim().equalsIgnoreCase("yes")) {
+			isValid = true;
+			response = true;
+		} else if (input.trim().equalsIgnoreCase("no")) {
+			isValid = true;
+			response = false;
 		} else {
 			System.out.println("You did not respond to the queston in the correct form");
-			return false;
 		}
+		return false;
 	}
 
 	public static byte requestByte(String question) {
 		byte num = 0;
 		String input;
-		System.out.print(question + " ");
-		input = scanner.nextLine();
-		try {
-			num = Byte.parseByte(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You did not supply a valid number [" + input + "]. please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Byte.parseByte(input);
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "]. please provide only digits.");
+			}
 		}
 		return num;
 	}
@@ -69,14 +80,19 @@ public class AppBasics {
 	}
 
 	public static double requestDouble(String question) {
-		double num = 0;
+		double num = 0.0;
 		String input;
-		System.out.print(question + "");
-		input = scanner.nextLine();
-		try {
-			num = Double.parseDouble(input); // num = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + "");
+			input = scanner.nextLine();
+			try {
+				num = Double.parseDouble(input);
+				isValid = true;// num =
+								// Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+			}
 		}
 		return num;
 	}
@@ -84,25 +100,61 @@ public class AppBasics {
 	public static float requestFloat(String question) {
 		float num = 0;
 		String input;
-		System.out.print(question + "");
-		input = scanner.nextLine();
-		try {
-			num = Float.parseFloat(input); // num = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + "");
+			input = scanner.nextLine();
+			try {
+				num = Float.parseFloat(input);
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+			}
 		}
 		return num;
 	}
 
 	public static int requestInt(String question) {
-		int num = 0; // double num =0.0;
+		int num = 0;
 		String input;
-		System.out.print(question + "");
-		input = scanner.nextLine();
-		try {
-			num = Integer.parseInt(input); // num = Double.pareseDouble(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Integer.parseInt(input);
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "]. please provide only digits.");
+			}
+		}
+		return num;
+	}
+
+	public static int requestInt(String question, int min, int max) {
+		int num = 0;
+		String input;
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Integer.parseInt(input);
+				if (num > max) {
+					throw new RequestIntOverMaxException();
+				} else if (num < min) {
+					throw new RequestIntUnderMinException();
+				}
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
+			} catch (RequestIntOverMaxException e) {
+				System.out.println("You have exceeded the max value of \" + max + \" [\" + input\r\n"
+						+ " + \"]. Please provide a number within range.");
+			} catch (RequestIntUnderMinException e) {
+				System.out.println("You have not reached the min value of \" + min + \" [\" + input\r\n"
+						+ " + \"]. Please provide a number within range.");
+			}
 		}
 		return num;
 	}
@@ -110,12 +162,16 @@ public class AppBasics {
 	public static long requestLong(String question) {
 		long num = 0;
 		String input;
-		System.out.print(question + " ");
-		input = scanner.nextLine();
-		try {
-			num = Long.parseLong(input); // num = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You dsid not supply a valid number [" + input + "].please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Long.parseLong(input);
+				isValid = true;
+			} catch (NumberFormatException e) {
+				System.out.println("You dsid not supply a valid number [" + input + "].please provide only digits.");
+			}
 		}
 		return num;
 	}
@@ -123,12 +179,15 @@ public class AppBasics {
 	public static short requestShort(String question) {
 		short num = 0;
 		String input;
-		System.out.print(question + " ");
-		input = scanner.nextLine();
-		try {
-			num = Short.parseShort(input); // num = Integer.parseInt(input);
-		} catch (NumberFormatException e) {
-			System.out.println("You dsid not supply a valid number [" + input + "].please provide only digits.");
+		boolean isValid = false;
+		while (!isValid) {
+			System.out.print(question + " ");
+			input = scanner.nextLine();
+			try {
+				num = Short.parseShort(input); // num = Integer.parseInt(input);
+			} catch (NumberFormatException e) {
+				System.out.println("You dsid not supply a valid number [" + input + "].please provide only digits.");
+			}
 		}
 		return num;
 	}
