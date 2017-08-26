@@ -54,7 +54,7 @@ public class AppBasics {
 		} else {
 			System.out.println("You did not respond to the queston in the correct form");
 		}
-		return false;
+		return response;
 	}
 
 	public static byte requestByte(String question) {
@@ -131,7 +131,7 @@ public class AppBasics {
 		return num;
 	}
 
-	public static int requestInt(String question, int min, int max) {
+	public static int requestInt(String question, int min, int max, String errorMessage) {
 		int num = 0;
 		String input;
 		boolean isValid = false;
@@ -151,9 +151,8 @@ public class AppBasics {
 			} catch (RequestIntOverMaxException e) {
 				System.out.println("You have exceeded the max value of \" + max + \" [\" + input\r\n"
 						+ " + \"]. Please provide a number within range.");
-			} catch (RequestIntUnderMinException e) {
-				System.out.println("You have not reached the min value of \" + min + \" [\" + input\r\n"
-						+ " + \"]. Please provide a number within range.");
+			} catch (RequestIntUnderMinException | RequestIntOverMaxException e) {
+				System.out.println(errorMessage);
 			}
 		}
 		return num;
@@ -184,9 +183,9 @@ public class AppBasics {
 			System.out.print(question + " ");
 			input = scanner.nextLine();
 			try {
-				num = Short.parseShort(input); // num = Integer.parseInt(input);
+				num = Short.parseShort(input);
 			} catch (NumberFormatException e) {
-				System.out.println("You dsid not supply a valid number [" + input + "].please provide only digits.");
+				System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
 			}
 		}
 		return num;
