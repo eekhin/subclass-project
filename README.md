@@ -1,6 +1,6 @@
-# Automation Project
+# Subclass Project
 
-*Structure for creating a Basic automation test using Selenium.*
+*Structure for creating a Subclass using Selenium.*
 
 **Java 8**
 
