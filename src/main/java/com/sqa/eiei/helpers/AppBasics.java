@@ -158,9 +158,6 @@ public class AppBasics {
 				isValid = true;
 			} catch (NumberFormatException e) {
 				System.out.println("You did not supply a valid number [" + input + "].please provide only digits.");
-			} catch (RequestIntOverMaxException e) {
-				System.out.println("You have exceeded the max value of \" + max + \" [\" + input\r\n"
-						+ " + \"]. Please provide a number within range.");
 			} catch (RequestIntUnderMinException | RequestIntOverMaxException e) {
 				System.out.println(errorMessage);
 			}
